@@ -1,5 +1,8 @@
 from django.shortcuts import render
-
+import markdown
+import os
+from django.conf import settings
+from django.http import Http404
 from . import util
 
 
@@ -9,6 +12,6 @@ def index(request):
     })
 
 def title_open(request, title):
-    return render(request, "entries/{title}.md", {
+    return render(request, f"entries/{title}.md", {
         "content": util.get_entry(title)
     })
