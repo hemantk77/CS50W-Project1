@@ -9,6 +9,6 @@ def index(request):
     })
 
 def title_open(request, title):
-    return render(request, "encyclopedia/content.html", {
+    return render(request, "entries/{title}.md", {
         "content": util.get_entry(title)
     })
