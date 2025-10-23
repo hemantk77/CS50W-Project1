@@ -8,7 +8,7 @@ def index(request):
         "entries": util.list_entries()
     })
 
-def wiki(request):
-    return render(request, "encycloppedia/content.html", {
-        "content": util.get_entry()
+def title_open(request, title):
+    return render(request, "encyclopedia/content.html", {
+        "content": util.get_entry(title)
     })
