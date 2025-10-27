@@ -1,6 +1,6 @@
 from django.shortcuts import render
-import markdown
-import os
+import markdown #This library help to translate the md file into a html one
+import os #opens the md file and reads all the data in it
 from django.conf import settings
 from django.http import Http404
 from . import util
@@ -12,6 +12,22 @@ def index(request):
     })
 
 def title_open(request, title):
-    return render(request, f"entries/{title}.md", {
-        "content": util.get_entry(title)
-    })
+    # This builds the full address: /your/project/folder/entries/CSS.md
+    md_file_path = os.path.join(settings.BASE_DIR, 'entries', f'{title}.md')
+    
+    try:
+        with open(md_file_path, 'r', encoding='utf-8') as f:
+            markdown_content = f.read()
+        html_content = markdown.markdown(markdown_content)
+        
+    except FileNotFoundError:
+        # If the file isn't there, this shows the standard "Page Not Found" page
+        raise Http404(f"Sorry, the page for '{title}' doesn't exist.")    
+    
+    context = {
+        'title': title,
+        'content_html': html_content  # The converted HTML is stored here
+    }
+    
+    # We send the converted HTML to a *real* HTML template file:
+    return render(request, 'encyclopedia/entry_display.html', context)
