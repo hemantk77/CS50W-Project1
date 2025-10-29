@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import markdown #This library help to translate the md file into a html one
 import os #opens the md file and reads all the data in it
 from django.conf import settings
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from . import util
+from django.urls import reverse
 
 
 def index(request):
@@ -31,3 +32,30 @@ def title_open(request, title):
     
     # We send the converted HTML to a *real* HTML template file:
     return render(request, 'encyclopedia/entry_display.html', context)
+
+def search_results(request):
+    user_query = request.GET.get('q') #from data comes from request.GET
+    all_entries = util.list_entries()
+    substring_matches = []
+    exact_match = None
+    
+    for entry in all_entries:
+        
+        if user_query.lower() == entry.lower():
+            exact_match = entry
+            break
+        
+        elif user_query.lower() in entry.lower():
+            substring_matches.append(entry)
+            
+    if exact_match:
+        entry_title = exact_match
+        redirect_url = reverse('title_open', title=entry_title)
+        return HttpResponseRedirect(redirect_url)
+    else:
+        results_list = substring_matches
+        
+        return render(request, "encyclopedia/search_results.html", {
+            "results": results_list,
+            "query": user_query
+        })
