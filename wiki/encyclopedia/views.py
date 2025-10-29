@@ -50,7 +50,7 @@ def search_results(request):
             
     if exact_match:
         entry_title = exact_match
-        redirect_url = reverse('title_open', title=entry_title)
+        redirect_url = reverse('title_open', kwargs={'title':entry_title})
         return HttpResponseRedirect(redirect_url)
     else:
         results_list = substring_matches
