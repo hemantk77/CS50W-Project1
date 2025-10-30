@@ -61,3 +61,17 @@ def search_results(request):
         })
         
 def create_new_page(request):
+    if request.method == "GET":
+        return render(request, "encyclopedia/new_page.html")
+    
+    elif request.method == "POST":
+        title = request.POST['title']
+        content = request.POST['content']
+        all_entries = util.list_entries()
+        
+        for entry in all_entries:
+            if entry.lower() == title:
+                return render(request, "encyclopedia/new_page.html", {"error": "This Title already exists."})
+            else:
+                util.save_entry(title, content)
+                return redirect('title_open', title=title)
