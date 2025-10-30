@@ -70,8 +70,10 @@ def create_new_page(request):
         all_entries = util.list_entries()
         
         for entry in all_entries:
-            if entry.lower() == title:
-                return render(request, "encyclopedia/new_page.html", {"error": "This Title already exists."})
-            else:
-                util.save_entry(title, content)
-                return redirect('title_open', title=title)
+            if entry.lower() == title.lower():
+                return render(request, "encyclopedia/new_page.html", {
+                    "error": "This Title already exists."
+                    })
+            
+        util.save_entry(title, content)
+        return redirect('title_open', title=title)

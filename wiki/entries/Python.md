@@ -1,1 +1,1 @@
-Python is a very Cool language.
+Python is the fastest programming language.

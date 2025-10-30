@@ -1,0 +1,1 @@
+C is known to be the fastest programming language, even today.
