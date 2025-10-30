@@ -60,4 +60,4 @@ def search_results(request):
             "query": user_query
         })
         
-def create_page():
+def create_new_page(request):
