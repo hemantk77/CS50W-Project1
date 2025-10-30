@@ -59,3 +59,5 @@ def search_results(request):
             "results": results_list,
             "query": user_query
         })
+        
+def create_page():
