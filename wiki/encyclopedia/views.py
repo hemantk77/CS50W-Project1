@@ -77,3 +77,21 @@ def create_new_page(request):
             
         util.save_entry(title, content)
         return redirect('title_open', title=title)
+    
+def edit_page(request, title):
+    if request.method == "GET":
+        content = util.get_entry(title)
+        
+        if content is None:
+            raise Http404("Entry for '{title}' not found.")
+        
+        return render(request, "encyclopedia/edit_page.html", {
+            "title": title,
+            "content": content
+        })
+        
+    elif request.method == "POST":
+        new_content = request.POST['content']
+        util.save_entry(title, new_content)
+        
+        return redirect('title_open', title=title)
