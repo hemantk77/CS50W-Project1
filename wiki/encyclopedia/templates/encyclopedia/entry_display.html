@@ -9,6 +9,6 @@
         {{ content_html|safe }} 
     </div>
 
-    <a href="{% url 'edit_page' %}">Edit {{ title }}</a>
+    <a href="{% url 'edit_page' title=title %}">Edit {{ title }}</a>
 
 {% endblock %}
