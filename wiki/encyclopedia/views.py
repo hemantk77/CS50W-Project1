@@ -65,6 +65,8 @@ def create_new_page(request):
         return render(request, "encyclopedia/new_page.html")
     
     elif request.method == "POST":
+        print(f"FORM DATA RECEIVED: {request.POST}")
+        
         title = request.POST['title']
         content = request.POST['content']
         all_entries = util.list_entries()
