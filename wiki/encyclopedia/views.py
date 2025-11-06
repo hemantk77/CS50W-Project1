@@ -5,6 +5,7 @@ from django.conf import settings
 from django.http import Http404, HttpResponseRedirect
 from . import util
 from django.urls import reverse
+import random
 
 
 def index(request):
@@ -97,3 +98,10 @@ def edit_page(request, title):
         util.save_entry(title, new_content)
         
         return redirect('title_open', title=title)
+    
+def random_page():
+    all_entries = util.list_entries()
+    title = random.choice(all_entries)
+    
+    return redirect('title_open', title=title)
+    
