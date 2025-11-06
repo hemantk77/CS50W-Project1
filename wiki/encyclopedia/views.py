@@ -99,7 +99,7 @@ def edit_page(request, title):
         
         return redirect('title_open', title=title)
     
-def random_page():
+def random_page(request):
     all_entries = util.list_entries()
     title = random.choice(all_entries)
     
