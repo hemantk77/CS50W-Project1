@@ -1,1 +1,1 @@
-Go is used in google.
+Go is used in google. Go is very fast.
